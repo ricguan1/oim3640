@@ -47,11 +47,11 @@
 
 # in row i, how many bricks are there? = i+1
 
-# def draw_triangle(rows):
-#     for i in range(rows):
-#         print("@" * (i+1))
+def draw_triangle(rows):
+    for i in range(rows):
+        print("@" * (i+1))
 
-# draw_triangle(4)
+draw_triangle(4)
 
 
 # REVIEW THIS QUESTION
@@ -80,7 +80,7 @@ draw_triangle(5)
   #####
  #######
 
-def draw_pyramid(size):
-    for i in range(size):
-        print(" " * )
+# def draw_pyramid(size):
+#     for i in range(size):
+#         print(" " * )
  
