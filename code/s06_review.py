@@ -66,11 +66,11 @@ draw_triangle(4)
 # for i in range (size):
 #     in row i, how many spaces are in there? size - i = 1
 
-def draw_triangle(size):
-    for i in range(size):
-        print(" " * (size - i - 1) + "#" * (i + 1))
+# def draw_triangle(size):
+#     for i in range(size):
+#         print(" " * (size - i - 1) + "#" * (i + 1))
 
-draw_triangle(5)
+# draw_triangle(5)
 
 
 # create a function to draw a pyramid
@@ -83,4 +83,6 @@ draw_triangle(5)
 # def draw_pyramid(size):
 #     for i in range(size):
 #         print(" " * )
+ 
+
  
