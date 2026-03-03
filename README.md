@@ -10,4 +10,3 @@ this is my course repository for OIM3640
 
 ## My Projects
 - First Project (./projects/Project-1)
-- 
