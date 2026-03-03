@@ -7,3 +7,7 @@ this is my course repository for OIM3640
 - Name: Ric Guan
 - Concentration: Operations
 - Interests: Snowboard, Ice Hockey
+
+## My Projects
+- First Project (./projects/Project-1)
+- 
