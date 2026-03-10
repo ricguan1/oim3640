@@ -11,13 +11,13 @@ def is_valid(word, letters, required):
 
 def find_words(letters, required):
     """find all words that are valid"""
-    with open ("words.txt") as word_file:
+    with open ('words.txt') as word_file:
         for word in word_file:
             word = word.strip()
             if is_valid(word, letters, required):
                 print(word)
 
-def main():
+
 print(uses_only('cake', 'kcboela'))
 print(uses_only('babson', 'kcboela'))
 print(uses_only('tacoma', 'kcboela'))
@@ -25,5 +25,5 @@ print(uses_only('python', 'kcboela'))
 valid_words = find_words ('kcboela', 'a')
 print(valid_words)
 
-if__name_ == '__main__':
-    main()
+if__name_ == '__main__'
+main()
