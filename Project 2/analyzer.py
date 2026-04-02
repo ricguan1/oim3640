@@ -30,8 +30,12 @@ STOP_WORDS = {
     "is", "was", "are", "were", "be", "been", "have", "has", "had",
     "do", "did", "that", "this", "my", "your", "his", "her", "our",
     "me", "him", "us", "them", "so", "just", "like", "up", "out",
-    "what", "know", "yeah", "uh", "um", "minutes", "secondsyeah", "im", "hes", "its", "when", "not", "very",
-"going", "here", "there", "can", "right", "got", "as", "much", "little", "thats", "theres", "from", "no", "about", "always", "want", "think", "into", "really", "bit", "guys", "secondsi", "secondsyou"
+    "what", "know", "yeah", "uh", "um", "minutes", "secondsyeah", "im", 
+    "hes", "its", "when", "not", "very","going", "here", "there", "can", 
+    "right", "got", "as", "much", "little", "thats", "theres", "from", "no", 
+    "about", "always", "want", "think", "into", "really", "bit", "guys", 
+    "secondsi", "secondsyou", "secondsand", "youre", "ive", "minute"
+    "minute", "secondsand", "youre", "ive", "all", "how", "oh", "still", "who"
 }
 
 def remove_stop_words(words):
