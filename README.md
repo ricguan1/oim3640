@@ -9,4 +9,5 @@ this is my course repository for OIM3640
 - Interests: Snowboard, Ice Hockey
 
 ## My Projects
-- First Project (./projects/Project-1)
+- First Project (/Users/rg/Documents/GitHub/oim3640/Project 1)
+- [MP2: NHL Interview Analyzer](projects/mp2-nhl-analyzer)
