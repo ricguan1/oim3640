@@ -50,11 +50,3 @@
 
 # towns = data['data']
 # print(type(towns))
-
-import requests
-
-response = requests.get(
-    'https://oim.108122.xyz/words/random',
-    headers={'X-Token': 'ricric'},  # your first name x2
-)
-print(response.json())
