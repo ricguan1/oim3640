@@ -26,18 +26,24 @@ def get_nearest_stops(lat, lng):
         "filter[latitude]": lat,
         "filter[longitude]": lng,
         "sort": "distance",
-        "page[limit]": 3,
+        "page[limit]": 10,
     }
     data = requests.get("https://api-v3.mbta.com/stops", params=params).json()
     stops = []
+    seen = set()
     for stop in data["data"]:
         attrs = stop["attributes"]
-        stops.append({
-            "name": attrs["name"],
-            "wheelchair": attrs["wheelchair_boarding"] == 1,
-            "lat": attrs["latitude"],
-            "lng": attrs["longitude"],
-        })
+        name = attrs["name"]
+        if name not in seen:
+            seen.add(name)
+            stops.append({
+                "name": name,
+                "wheelchair": attrs["wheelchair_boarding"] == 1,
+                "lat": attrs["latitude"],
+                "lng": attrs["longitude"],
+            })
+        if len(stops) == 3:
+            break
     return stops
 
 
