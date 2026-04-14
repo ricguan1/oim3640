@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First HTML Page - Learning HTML</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: blue; }
+        .highlight { background-color: yellow; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hello, World!</h1>
+        <p>This is my first HTML page. Let's learn about various HTML tags!</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#headings">Headings</a></li>
+            <li><a href="#paragraphs">Paragraphs</a></li>
+            <li><a href="#lists">Lists</a></li>
+            <li><a href="#links">Links</a></li>
+            <li><a href="#images">Images</a></li>
+            <li><a href="#tables">Tables</a></li>
+            <li><a href="#forms">Forms</a></li>
+        </ul>
+    </nav>
+
+    <section id="headings">
+        <h2>Headings</h2>
+        <h1>This is an H1 heading</h1>
+        <h2>This is an H2 heading</h2>
+        <h3>This is an H3 heading</h3>
+        <h4>This is an H4 heading</h4>
+        <h5>This is an H5 heading</h5>
+        <h6>This is an H6 heading</h6>
+    </section>
+
+    <section id="paragraphs">
+        <h2>Paragraphs and Text Formatting</h2>
+        <p>This is a paragraph. <strong>This text is bold.</strong> <em>This text is italic.</em></p>
+        <p>You can also use <span class="highlight">spans</span> for inline styling.</p>
+        <blockquote>
+            This is a blockquote for quoting text.
+        </blockquote>
+    </section>
+
+    <section id="lists">
+        <h2>Lists</h2>
+        <h3>Unordered List</h3>
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+        </ul>
+        <h3>Ordered List</h3>
+        <ol>
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+        </ol>
+    </section>
+
+    <section id="links">
+        <h2>Links</h2>
+        <p>Click <a href="https://www.google.com" target="_blank">here</a> to go to Google.</p>
+        <p>This is an <a href="#headings">internal link</a> to the headings section.</p>
+    </section>
+
+    <section id="images">
+        <h2>Images</h2>
+        <p>Here's a placeholder image:</p>
+        <img src="https://via.placeholder.com/300x200" alt="Placeholder Image" width="300" height="200">
+        <p>Images need a src attribute pointing to the image file or URL, and an alt attribute for accessibility.</p>
+    </section>
+
+    <section id="tables">
+        <h2>Tables</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John</td>
+                    <td>25</td>
+                    <td>New York</td>
+                </tr>
+                <tr>
+                    <td>Jane</td>
+                    <td>30</td>
+                    <td>London</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="forms">
+        <h2>Forms</h2>
+        <form action="#" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"><br><br>
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 My First HTML Page. Made with ❤️</p>
+    </footer>
+</body>
+</html>
