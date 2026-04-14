@@ -14,7 +14,7 @@ the MBTA V3 API, and displays them on an interactive map.
 ![Results Page](screenshots/results.png)
 
 ### Map with Pins
-![Map](screenshots/map.png)
+(screenshots/map.png)
 
 ## Project Structure
 
