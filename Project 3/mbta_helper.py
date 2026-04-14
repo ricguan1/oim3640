@@ -25,6 +25,7 @@ def get_nearest_stops(lat, lng):
         "api_key": MBTA_API_KEY,
         "filter[latitude]": lat,
         "filter[longitude]": lng,
+        "filter[route_type]": "0,1,2",
         "sort": "distance",
         "page[limit]": 10,
     }
