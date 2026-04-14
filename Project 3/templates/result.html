@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTA Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🚇 Nearest MBTA Stops</h1>
+        <p>Showing the 3 nearest stops to <strong>{{ place }}</strong>:</p>
+
+        <div class="stops">
+            {% for stop in stops %}
+            <div class="stop-card">
+                <h2>{{ loop.index }}. {{ stop.name }}</h2>
+                <p>♿ Wheelchair Accessible: <strong>{{ "Yes" if stop.wheelchair else "No" }}</strong></p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <a href="/" class="back-link">← Search Again</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTA Stop Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🚇 MBTA Stop Finder</h1>
+        <p>Enter any Boston-area location to find the 3 nearest MBTA stops.</p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form action="/nearest" method="POST">
+            <input type="text" name="place_name" placeholder="e.g. Fenway Park, Boston Common..." required>
+            <button type="submit">Find Stops</button>
+        </form>
+    </div>
+</body>
+</html>
