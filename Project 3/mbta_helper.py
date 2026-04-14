@@ -21,30 +21,48 @@ def get_lat_lng(place_name):
 
 
 def get_nearest_stops(lat, lng):
-    params = {
-        "api_key": MBTA_API_KEY,
-        "filter[latitude]": lat,
-        "filter[longitude]": lng,
-        "filter[route_type]": "0,1,2",
-        "sort": "distance",
-        "page[limit]": 10,
-    }
-    data = requests.get("https://api-v3.mbta.com/stops", params=params).json()
+    def fetch_stops(route_types, limit):
+        params = {
+            "api_key": MBTA_API_KEY,
+            "filter[latitude]": lat,
+            "filter[longitude]": lng,
+            "filter[route_type]": route_types,
+            "sort": "distance",
+            "page[limit]": limit,
+        }
+        data = requests.get("https://api-v3.mbta.com/stops", params=params).json()
+        seen = set()
+        results = []
+        for stop in data["data"]:
+            attrs = stop["attributes"]
+            name = attrs["name"]
+            if attrs["location_type"] == 0 and name not in seen:
+                seen.add(name)
+                results.append({
+                    "name": name,
+                    "wheelchair": attrs["wheelchair_boarding"] == 1,
+                    "lat": attrs["latitude"],
+                    "lng": attrs["longitude"],
+                })
+        return results
+
+    rail_stops = fetch_stops("0,1,2", 50)
+    any_stops = fetch_stops("0,1,2,3", 50)
+
     stops = []
     seen = set()
-    for stop in data["data"]:
-        attrs = stop["attributes"]
-        name = attrs["name"]
-        if name not in seen:
-            seen.add(name)
-            stops.append({
-                "name": name,
-                "wheelchair": attrs["wheelchair_boarding"] == 1,
-                "lat": attrs["latitude"],
-                "lng": attrs["longitude"],
-            })
+
+    if rail_stops:
+        stops.append(rail_stops[0])
+        seen.add(rail_stops[0]["name"])
+
+    for stop in any_stops:
+        if stop["name"] not in seen:
+            seen.add(stop["name"])
+            stops.append(stop)
         if len(stops) == 3:
             break
+
     return stops
 
 
