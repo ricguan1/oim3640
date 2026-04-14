@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBTA Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
 </head>
 <body>
     <div class="container">
@@ -20,7 +22,33 @@
             {% endfor %}
         </div>
 
+        <div id="map"></div>
+
         <a href="/" class="back-link">← Search Again</a>
     </div>
+
+    <script>
+        mapboxgl.accessToken = "{{ mapbox_token }}";
+
+        const map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/mapbox/streets-v12",
+            center: [{{ lng }}, {{ lat }}],
+            zoom: 14,
+        });
+
+        new mapboxgl.Marker({ color: "red" })
+            .setLngLat([{{ lng }}, {{ lat }}])
+            .setPopup(new mapboxgl.Popup().setText("{{ place }}"))
+            .addTo(map);
+
+        const stops = {{ stops | tojson }};
+        stops.forEach((stop, i) => {
+            new mapboxgl.Marker({ color: "#003366" })
+                .setLngLat([stop.lng, stop.lat])
+                .setPopup(new mapboxgl.Popup().setText(`${i + 1}. ${stop.name}`))
+                .addTo(map);
+        });
+    </script>
 </body>
 </html>

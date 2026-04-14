@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from mbta_helper import find_stops_near
+from mbta_helper import find_stops_near, MAPBOX_TOKEN
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def nearest():
     place_name = request.form["place_name"]
     try:
         stops, lat, lng = find_stops_near(place_name)
-        return render_template("result.html", stops=stops, place=place_name, lat=lat, lng=lng)
+        return render_template("result.html", stops=stops, place=place_name, lat=lat, lng=lng, mapbox_token=MAPBOX_TOKEN)
     except Exception:
         return render_template("index.html", error=f"Could not find MBTA stops near '{place_name}'. Try a different location.")
 
