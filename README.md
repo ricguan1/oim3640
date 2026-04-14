@@ -11,3 +11,4 @@ this is my course repository for OIM3640
 ## My Projects
 - [MP1: GPA Calculator](Project%201)
 - [MP2: NHL Interview Analyzer](Project%202)
+- [MP3: MBTA Stop Finder](Project%203/)
