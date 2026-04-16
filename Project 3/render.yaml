@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: mbta-stop-finder
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: MAPBOX_TOKEN
+        sync: false
+      - key: MBTA_API_KEY
+        sync: false
