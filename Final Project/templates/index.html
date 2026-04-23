@@ -12,12 +12,8 @@
             padding: 0 20px;
             background-color: #f4f4f4;
         }
-        h1 {
-            color: #003087;
-        }
-        form {
-            margin: 20px 0;
-        }
+        h1 { color: #003087; }
+        form { margin: 20px 0; }
         input[type="text"] {
             padding: 10px;
             width: 60%;
@@ -34,17 +30,64 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #FCB514;
-            color: #003087;
-        }
-        .results {
-            margin-top: 20px;
-        }
+        button:hover { background-color: #FCB514; color: #003087; }
         .player-card {
             background: white;
             padding: 15px;
             margin: 10px 0;
             border-radius: 6px;
             display: flex;
-            justify-content
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .player-card a {
+            text-decoration: none;
+            color: #003087;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .player-card a:hover { color: #FCB514; }
+        .player-meta { color: #666; font-size: 14px; }
+        .inactive { color: #999; font-size: 12px; }
+        .error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <p><a href="/compare">⚔️ Compare two players</a></p>
+    <h1>🏒 NHL Player Dashboard</h1>
+    <p>Search for any NHL player to view their stats and career history.</p>
+    <form method="POST">
+    <input type="text" name="name" placeholder="Search player name..." autofocus>
+    <select name="filter" style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+        <option value="all" {% if selected_filter == 'all' %}selected{% endif %}>All Players</option>
+        <option value="active" {% if selected_filter == 'active' %}selected{% endif %}>Active Only</option>
+        <option value="inactive" {% if selected_filter == 'inactive' %}selected{% endif %}>Inactive Only</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if results %}
+        <div class="results">
+            <h2>Results</h2>
+            {% for player in results %}
+                <div class="player-card">
+                    <div>
+                        <a href="/player/{{ player.id }}">{{ player.name }}</a>
+                        <div class="player-meta">{{ player.position }} — {{ player.team }}</div>
+                    </div>
+                    <div>
+                        {% if player.active %}
+                            <span style="color: green;">Active</span>
+                        {% else %}
+                            <span class="inactive">Inactive</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

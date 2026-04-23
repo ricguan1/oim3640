@@ -1,27 +1,42 @@
 import requests
 
+def format_season(season_id):
+    s = str(season_id)
+    return f"{s[:4]}-{s[6:]}"
+
 SEARCH_URL = "https://search.d3.nhle.com/api/v1/search/player"
 PLAYER_URL = "https://api-web.nhle.com/v1/player/{}/landing"
 
 
 def search_player(name):
-    params = {
-        "culture": "en-us",
-        "limit": 20,
-        "q": name,
-    }
-    response = requests.get(SEARCH_URL, params=params)
-    response.raise_for_status()
-    players = response.json()
+    seen = set()
     results = []
-    for player in players:
-        results.append({
-            "id": int(player["playerId"]),
-            "name": player["name"],
-            "team": player.get("teamAbbrev") or "N/A",
-            "position": player.get("positionCode", "N/A"),
-            "active": player.get("active", False),
-        })
+    queries = [name]
+    parts = name.strip().split()
+    if len(parts) > 1:
+        queries.append(parts[0])
+        queries.append(parts[-1])
+
+    for query in queries:
+        params = {
+            "culture": "en-us",
+            "limit": 20,
+            "q": query,
+        }
+        response = requests.get(SEARCH_URL, params=params)
+        response.raise_for_status()
+        players = response.json()
+        for player in players:
+            pid = int(player["playerId"])
+            if pid not in seen:
+                seen.add(pid)
+                results.append({
+                    "id": pid,
+                    "name": player["name"],
+                    "team": player.get("teamAbbrev") or "N/A",
+                    "position": player.get("positionCode", "N/A"),
+                    "active": player.get("active", False),
+                })
     return results
 
 
@@ -52,6 +67,8 @@ def get_player_stats(player_id):
         s for s in data.get("seasonTotals", [])
         if s.get("leagueAbbrev") == "NHL" and s.get("gameTypeId") == 2
     ]
+    for s in nhl_seasons:
+        s["season_display"] = format_season(s["season"])
 
     return {
         "bio": bio,

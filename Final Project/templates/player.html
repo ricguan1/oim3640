@@ -135,6 +135,9 @@
         </div>
     </div>
 
+    <h2>Points Per Season</h2>
+    <img src="data:image/png;base64,{{ chart }}" alt="Points Per Season Chart" style="width:100%; border-radius:8px; background:white; padding:10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+
     <h2>Last 5 Games</h2>
     <table>
         <thead>
@@ -177,7 +180,7 @@
         <tbody>
             {% for season in stats.nhl_seasons %}
             <tr>
-                <td>{{ season.season }}</td>
+                <td>{{ season.season_display }}</td>
                 <td>{{ season.teamName.default }}</td>
                 <td>{{ season.gamesPlayed }}</td>
                 <td>{{ season.goals }}</td>
