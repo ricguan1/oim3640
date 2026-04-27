@@ -5,22 +5,23 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from flask import Flask, render_template, request
 from nhl_helper import search_player, get_player_stats
+from nhl_helper import search_player, get_player_stats, get_scores_today, get_scoring_leaders
 
 app = Flask(__name__)
 
 
-def build_points_chart(nhl_seasons):
+def build_points_chart(nhl_seasons, team_color="#111111"):
     seasons = [s["season_display"] for s in nhl_seasons]
     points = [s.get("points", 0) for s in nhl_seasons]
 
     fig, ax = plt.subplots(figsize=(10, 4))
-    ax.bar(seasons, points, color="#003087")
-    ax.set_title("Points Per Season", fontsize=14, color="#003087")
+    ax.bar(seasons, points, color=team_color)
+    ax.set_title("Points Per Season", fontsize=14, color="#111111")
     ax.set_xlabel("Season")
     ax.set_ylabel("Points")
     ax.tick_params(axis="x", rotation=45)
     for i, v in enumerate(points):
-        ax.text(i, v + 1, str(v), ha="center", va="bottom", fontsize=8, color="#003087")
+        ax.text(i, v + 1, str(v), ha="center", va="bottom", fontsize=8, color="#111111")
     plt.tight_layout()
 
     buf = io.BytesIO()
@@ -33,6 +34,8 @@ def build_points_chart(nhl_seasons):
 def build_compare_chart(stats1, stats2):
     name1 = stats1["bio"]["name"]
     name2 = stats2["bio"]["name"]
+    color1 = stats1["bio"]["team_color"]
+    color2 = stats2["bio"]["team_color"]
     categories = ["Goals", "Assists", "Points"]
     vals1 = [
         stats1["current_season"].get("goals", 0),
@@ -48,19 +51,19 @@ def build_compare_chart(stats1, stats2):
     x = range(len(categories))
     width = 0.35
     fig, ax = plt.subplots(figsize=(8, 4))
-    bars1 = ax.bar([i - width/2 for i in x], vals1, width, label=name1, color="#003087")
-    bars2 = ax.bar([i + width/2 for i in x], vals2, width, label=name2, color="#FCB514")
+    bars1 = ax.bar([i - width/2 for i in x], vals1, width, label=name1, color=color1)
+    bars2 = ax.bar([i + width/2 for i in x], vals2, width, label=name2, color=color2)
 
     for bar in bars1:
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
-                str(int(bar.get_height())), ha="center", va="bottom", fontsize=9, color="#003087")
+                str(int(bar.get_height())), ha="center", va="bottom", fontsize=9, color=color1)
     for bar in bars2:
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
-                str(int(bar.get_height())), ha="center", va="bottom", fontsize=9, color="#b8860b")
+                str(int(bar.get_height())), ha="center", va="bottom", fontsize=9, color=color2)
 
     ax.set_xticks(list(x))
     ax.set_xticklabels(categories)
-    ax.set_title("Current Season Comparison", fontsize=13, color="#003087")
+    ax.set_title("Current Season Comparison", fontsize=13, color="#111111")
     ax.legend()
     plt.tight_layout()
 
@@ -97,7 +100,7 @@ def player(player_id):
         stats = get_player_stats(player_id)
     except Exception:
         return render_template("index.html", results=[], error="Player not found.")
-    chart = build_points_chart(stats["nhl_seasons"])
+    chart = build_points_chart(stats["nhl_seasons"], stats["bio"]["team_color"])
     return render_template("player.html", stats=stats, chart=chart)
 
 
@@ -132,6 +135,16 @@ def compare_players(id1, id2):
                                name1="", name2="", error="Could not load player data.")
     chart = build_compare_chart(stats1, stats2)
     return render_template("compare_result.html", stats1=stats1, stats2=stats2, chart=chart)
+
+@app.route("/leaders")
+def leaders():
+    try:
+        scores = get_scores_today()
+        scoring_leaders = get_scoring_leaders()
+    except Exception as e:
+        scores = []
+        scoring_leaders = {"points": [], "goals": [], "assists": []}
+    return render_template("leaders.html", scores=scores, leaders=scoring_leaders)
 
 if __name__ == "__main__":
     app.run(debug=True)
