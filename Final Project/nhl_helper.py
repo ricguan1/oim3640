@@ -7,6 +7,21 @@ def format_season(season_id):
 SEARCH_URL = "https://search.d3.nhle.com/api/v1/search/player"
 PLAYER_URL = "https://api-web.nhle.com/v1/player/{}/landing"
 
+TEAM_COLORS = {
+    "ANA": "#F47A38", "ARI": "#8C2633", "BOS": "#FFB81C", "BUF": "#003087",
+    "CGY": "#CE1126", "CAR": "#CC0000", "CHI": "#CF0A2C", "COL": "#6F263D",
+    "CBJ": "#002654", "DAL": "#006847", "DET": "#CE1126", "EDM": "#FF4C00",
+    "FLA": "#041E42", "LAK": "#111111", "MIN": "#154734", "MTL": "#AF1E2D",
+    "NSH": "#FFB81C", "NJD": "#CE1126", "NYI": "#F47D30", "NYR": "#0038A8",
+    "OTT": "#E31837", "PHI": "#F74902", "PIT": "#FCB514", "SEA": "#99D9D9",
+    "SJS": "#006D75", "STL": "#002F87", "TBL": "#002868", "TOR": "#003E7E",
+    "UTA": "#71AFE5", "VAN": "#00843D", "VGK": "#B4975A", "WSH": "#041E42",
+    "WPG": "#004C97", "NYI": "#F47D30", "MLK": "#111111",
+}
+
+
+def get_team_color(abbrev):
+    return TEAM_COLORS.get(abbrev, "#003087")
 
 def search_player(name):
     seen = set()
@@ -57,6 +72,7 @@ def get_player_stats(player_id):
         "birth_country": data.get("birthCountry", "N/A"),
         "height": data.get("heightInInches", "N/A"),
         "weight": data.get("weightInPounds", "N/A"),
+        "team_color": get_team_color(data.get("currentTeamAbbrev", "")),
     }
 
     current = data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
@@ -94,3 +110,48 @@ if __name__ == "__main__":
     print("Last 5 games:")
     for game in stats["last5"]:
         print(f"  {game['gameDate']} vs {game['opponentAbbrev']}: {game['goals']}G {game['assists']}A")
+
+def get_scores_today():
+    url = "https://api-web.nhle.com/v1/score/now"
+    response = requests.get(url)
+    response.raise_for_status()
+    data = response.json()
+    games = []
+    for game in data.get("games", []):
+        games.append({
+            "home": game.get("homeTeam", {}).get("abbrev", ""),
+            "away": game.get("awayTeam", {}).get("abbrev", ""),
+            "home_score": game.get("homeTeam", {}).get("score", 0),
+            "away_score": game.get("awayTeam", {}).get("score", 0),
+            "state": game.get("gameState", ""),
+            "period": game.get("periodDescriptor", {}).get("number", ""),
+            "home_logo": game.get("homeTeam", {}).get("logo", ""),
+            "away_logo": game.get("awayTeam", {}).get("logo", ""),
+        })
+    return games
+
+
+def get_category_leaders(category):
+    url = f"https://api-web.nhle.com/v1/skater-stats-leaders/20252026/2?limit=10&categories={category}"
+    response = requests.get(url)
+    response.raise_for_status()
+    data = response.json()
+    players = data.get(category, [])
+    results = []
+    for player in players:
+        results.append({
+            "name": f"{player.get('firstName', {}).get('default', '')} {player.get('lastName', {}).get('default', '')}",
+            "team": player.get("teamAbbrev", ""),
+            "value": player.get("value", 0),
+            "headshot": player.get("headshot", ""),
+            "id": player.get("id", 0),
+        })
+    return results
+
+
+def get_scoring_leaders():
+    return {
+        "points": get_category_leaders("points"),
+        "goals": get_category_leaders("goals"),
+        "assists": get_category_leaders("assists"),
+    }
