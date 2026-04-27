@@ -12,7 +12,7 @@
             padding: 0 20px;
             background-color: #f4f4f4;
         }
-        h1 { color: #003087; }
+        h1 { color: #111111; }
         form { margin: 20px 0; }
         input[type="text"] {
             padding: 10px;
@@ -24,13 +24,13 @@
         button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #003087;
+            background-color: #111111;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
-        button:hover { background-color: #FCB514; color: #003087; }
+        button:hover { background-color: #0055E9; color: #111111; }
         .player-card {
             background: white;
             padding: 15px;
@@ -43,18 +43,43 @@
         }
         .player-card a {
             text-decoration: none;
-            color: #003087;
+            color: #111111;
             font-weight: bold;
             font-size: 18px;
         }
-        .player-card a:hover { color: #FCB514; }
+        .player-card a:hover { color: #0055E9; }
         .player-meta { color: #666; font-size: 14px; }
         .inactive { color: #999; font-size: 12px; }
         .error { color: red; margin-top: 10px; }
+        .navbar {
+    background-color: #111111;
+    padding: 12px 20px;
+    margin: -40px -20px 30px -20px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+.navbar a:hover {
+    background-color: #0055E9;
+    color: #111111;
+}
     </style>
 </head>
 <body>
-    <p><a href="/compare">⚔️ Compare two players</a></p>
+    <nav class="navbar">
+        <a href="/">🏒 Home</a>
+        <a href="/compare">⚔️ Compare</a>
+        <a href="/leaders">🏆 Leaders</a>
+    </nav>
     <h1>🏒 NHL Player Dashboard</h1>
     <p>Search for any NHL player to view their stats and career history.</p>
     <form method="POST">
