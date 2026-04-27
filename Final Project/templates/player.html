@@ -12,15 +12,13 @@
             padding: 0 20px;
             background-color: #f4f4f4;
         }
-        h1, h2 {
-            color: #003087;
-        }
+        h1, h2 { color: #111111; }
         a {
-            color: #003087;
+            color: #0055E9;
             text-decoration: none;
         }
         a:hover {
-            color: #FCB514;
+            color: #0055E9;
         }
         .header {
             display: flex;
@@ -59,7 +57,7 @@
         .stat-box .value {
             font-size: 32px;
             font-weight: bold;
-            color: #003087;
+            color: #111111;
         }
         .stat-box .label {
             font-size: 13px;
@@ -76,7 +74,7 @@
             margin-bottom: 20px;
         }
         th {
-            background-color: #003087;
+            background-color: #333333;
             color: white;
             padding: 10px;
             text-align: left;
@@ -98,12 +96,37 @@
             margin-bottom: 20px;
             font-size: 15px;
         }
+        .navbar {
+    background-color: #111111;
+    padding: 12px 20px;
+    margin: -40px -20px 30px -20px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+.navbar a:hover {
+    background-color: #0055E9;
+    color: #111111;
+}
     </style>
 </head>
 <body>
-    <a class="back" href="/">← Back to Search</a>
+    <nav class="navbar">
+    <a href="/">🏒 Home</a>
+    <a href="/compare">⚔️ Compare</a>
+    <a href="/leaders">🏆 Leaders</a>
+</nav>
 
-    <div class="header">
+    <div class="header" style="border-left: 6px solid {{ stats.bio.team_color }};">
         {% if stats.bio.headshot %}
             <img src="{{ stats.bio.headshot }}" alt="{{ stats.bio.name }}">
         {% endif %}
